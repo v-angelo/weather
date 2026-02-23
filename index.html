@@ -24,13 +24,13 @@
     </header>
     <main>
         <!-- random button -->
-        <div class="w-full flex justify-center py-5 gap-3">
+        <form id="weatherForm" class="w-full flex justify-center py-5 gap-3">
             <input id="city" class="border border-black/20 rounded-lg text-lg font-semibold p-2 mx-2" type="text"
                 placeholder="Enter City Name" required>
-            <button type="button" onclick="getWeather()"
+            <button type="submit"
                 class="bg-green-600 text-lg font-semibold rounded-lg p-2 mx-2 cursor-pointer px-2 hover:ring-2 hover:ring-black active:bg-green-500">Get
                 Weather</button>
-        </div>
+        </form>
         <!-- weather table -->
         <section class="w-full overflow-x-auto">
             <table class="table-auto lg:table-fixed lg:w-5xl max-w-5xl mx-auto">
@@ -66,9 +66,11 @@
 <script>
     const city = document.querySelector("#city");
     const tempButton = document.querySelector("#tempButton");
+    const weatherForm = document.querySelector("#weatherForm");
 
     // async function
-    const getWeather = async () => {
+    weatherForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
         // clearing session storage
         let celsArray = JSON.parse(sessionStorage.getItem("degreeCel"));
@@ -118,7 +120,7 @@
             console.log(error);
             alert("API Call Failed!");
         }
-    }
+    }); 
 
     // toggle between °C and °F
     tempButton.addEventListener("click", () => {
