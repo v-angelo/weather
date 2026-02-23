@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Weather</title>
+    <!-- favicon -->
+    <link rel="icon" href="weather-icon.ico">
     <!-- tailwind cdn -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- css -->
-    <!-- <link rel="stylesheet" href="./main.css"> -->
 </head>
 
 <body>
@@ -69,6 +69,8 @@
 
     // async function
     const getWeather = async () => {
+
+        // clearing session storage
         let celsArray = JSON.parse(sessionStorage.getItem("degreeCel"));
 
         if (!celsArray) {
@@ -86,6 +88,7 @@
             document.querySelector("#fahren").classList.add("hidden");
         }
 
+        // async-await api call
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city.value.trim()}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`);
             if (!response.ok) {
@@ -117,7 +120,7 @@
         }
     }
 
-    // toggle between °C adn °F
+    // toggle between °C and °F
     tempButton.addEventListener("click", () => {
         document.querySelector("#degree").classList.toggle("hidden");
         document.querySelector("#fahren").classList.toggle("hidden");
