@@ -41,8 +41,8 @@
                     <tr class="text-nowrap">
                         <th class="p-3">City Name</th>
                         <th class=""><button id="tempButton" onclick=""
-                                class="p-2 cursor-pointer hover:bg-sky-400 active:bg-sky-600 active:ring-2 rounded">Temperature <span
-                                    id="degree">(°C)</span><span id="fahren" class="hidden">(°F)</span></button></th>
+                                class="p-2 cursor-pointer hover:bg-sky-400 active:bg-sky-600 active:ring-2 rounded">Temperature
+                                <span id="degree">(°C)</span><span id="fahren" class="hidden">(°F)</span></button></th>
                         <th class="p-3">Weather Condition</th>
                         <th class="p-3">Humidity</th>
                         <th class="p-3">Wind Speed</th>
@@ -98,11 +98,14 @@
             console.log(data);
             let weatherData = document.querySelector("#weatherTbody");
             let weatherCondition = data.weather.map(obj => obj.main).join(", ");
+            let weatherIcon = data.weather[0].icon;
+            console.log(weatherIcon);
+            
             weatherData.innerHTML += `
                 <tr class="text-center text-lg font-semibold border-b border-b-black/15">
                     <td class="p-2">${data.name}</td>
                     <td class="p-2">${data.main.temp}</td>
-                    <td class="p-2">${weatherCondition}</td>
+                    <td class="p-2"><div class="flex justify-center items-center">${weatherCondition} <img class="w-10" src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="Icon"></div></td>
                     <td class="p-2">${data.main.humidity}</td>
                     <td class="p-2">${data.wind.speed}</td>
                 </tr> 
@@ -114,9 +117,10 @@
         }
     }
 
+    // toggle between °C adn °F
     tempButton.addEventListener("click", () => {
-       document.querySelector("#degree").classList.toggle("hidden");
-       document.querySelector("#fahren").classList.toggle("hidden");
+        document.querySelector("#degree").classList.toggle("hidden");
+        document.querySelector("#fahren").classList.toggle("hidden");
 
         const tempColumn = document.querySelectorAll("#weatherTbody td:nth-child(2)");
         const tempArray = Array.from(tempColumn).map(value => value.textContent);
