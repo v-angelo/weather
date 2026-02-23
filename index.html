@@ -96,6 +96,24 @@
         const fahren = document.querySelector(".fahren");
         degree.classList.toggle("hidden");
         fahren.classList.toggle("hidden");
+
+        const rowArray = Array.from(document.querySelectorAll("#weatherTbody tr"));
+        const tempArray = rowArray.map(row => row.cells[1].textContent);
+        console.log(tempArray);
+
+        const celArray = [...tempArray];
+        const fahrArray = celArray.map(c => (c * 9/5) + 32);
+
+        // if (degree.classList.contains("hidden")) {
+        //     document.querySelectorAll("#weatherTbody tr").forEach((row, index) => {
+        //         if(index=1) {
+        //             row.children[1].textContent = 
+        //         }
+        //     })
+        // } else {
+
+        // }
+        
     });
 
 </script>
