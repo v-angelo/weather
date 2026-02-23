@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Weather</title>
+    <!-- tailwind cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+
+    <header class="w-full bg-sky-500 px-3 py-5">
+        <nav class="flex justify-between max-w-5xl text-3xl font-bold mx-auto">
+            <h3 class="cursor-pointer hover:opacity-80"><i class="fa-solid fa-cloud-sun-rain"></i> Get Weather</h3>
+            <div class="flex justify-center gap-2 px-2">
+                <h3 class="cursor-pointer hover:opacity-80"><i class="fa-solid fa-location-crosshairs"></i></h3>
+                <h3 class="cursor-pointer hover:opacity-80 sm:hidden">☰</h3>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <!-- random button -->
+        <div class="w-full flex justify-center py-5 gap-3">
+            <input id="city" class="border border-black/20 rounded-lg text-lg font-semibold p-2 mx-2" type="text" placeholder="Enter City Name" required>
+            <button type="button" onclick="getWeather()"
+                class="bg-green-600 text-lg font-semibold rounded-lg p-2 mx-2 cursor-pointer px-2 hover:ring-2 hover:ring-black active:bg-green-500">Get Weather</button>
+        </div>
+        <!-- weather table -->
+        <section class="w-full overflow-x-auto">
+            <table class="table-auto lg:table-fixed lg:w-5xl max-w-5xl mx-auto">
+                <caption id="tableCaption">
+                    
+                </caption>
+                <thead class="bg-sky-500 text-xl">
+                    <tr class="text-nowrap">
+                        <th class="p-3">City Name</th>
+                        <th class=""><button id="tempButton" onclick="" class="p-2 cursor-pointer active:bg-sky-600 active:ring-2 rounded">Temperature <span class="degree">(°C)</span><span class="fahren hidden">(°F)</span></button></th>
+                        <th class="p-3">Weather Condition</th>
+                        <th class="p-3">Humidity</th>
+                        <th class="p-3">Wind Speed</th>
+                    </tr>
+                </thead>
+                <tbody id="weatherTbody" class="text-center bg-slate-50">
+                    <!-- weather details here -->                                           
+                </tbody>
+            </table>
+        </section>
+        <section id="billAmount" class="max-w-5xl max-lg:max-w-160 max-sm:max-w-140 mx-auto flex justify-end">
+            <!-- total price here -->
+        </section>
+    </main>
+    
+</body>
+<!-- fontawesome cdn -->
+<script src="https://kit.fontawesome.com/7e59fb41a7.js" crossorigin="anonymous"></script>
+
+<!-- api call -->
+<script>
+    const city = document.querySelector("#city");
+    const tempButton = document.querySelector("#tempButton");
+
+    // async function
+    const getWeather = async () => {
+        try {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city.value.trim()}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`);
+            if (!response.ok) {
+                console.log(response);
+                alert("Invalid City Name!");
+                city.value = "";
+                return;
+            }    
+            const data = await response.json();
+            console.log(data);
+            let weatherData = document.querySelector("#weatherTbody");
+            let weatherCondition = data.weather.map(obj => obj.main).join(", ");
+            weatherData.innerHTML += `
+                <tr class="text-center text-lg font-semibold border-b border-b-black/15">
+                    <td class="p-2">${data.name}</td>
+                    <td class="p-2">${data.main.temp}</td>
+                    <td class="p-2">${weatherCondition}</td>
+                    <td class="p-2">${data.main.humidity}</td>
+                    <td class="p-2">${data.wind.speed}</td>
+                </tr> 
+            `;
+            
+        } catch (error) {
+            console.log(error);            
+            alert("API Call Failed!");
+        }
+    }
+
+    tempButton.addEventListener("click", () => {
+        const degree = document.querySelector(".degree");
+        const fahren = document.querySelector(".fahren");
+        degree.classList.toggle("hidden");
+        fahren.classList.toggle("hidden");
+    });
+
+</script>
+</html>
