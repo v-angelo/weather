@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Weather</title>
     <!-- favicon -->
-    <link rel="icon" href="weather-icon.ico">
+    <link rel="icon" href="favicon.ico">
     <!-- tailwind cdn -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -22,8 +22,9 @@
             </div>
         </nav>
     </header>
+
     <main>
-        <!-- random button -->
+        <!-- get weather button -->
         <form id="weatherForm" class="w-full flex justify-center py-5 gap-3">
             <input id="city" class="border border-black/20 rounded-lg text-lg font-semibold p-2 mx-2" type="text"
                 placeholder="Enter City Name" required>
@@ -34,9 +35,6 @@
         <!-- weather table -->
         <section class="w-full overflow-x-auto">
             <table class="table-auto lg:table-fixed lg:w-5xl max-w-5xl mx-auto">
-                <caption id="tableCaption">
-
-                </caption>
                 <thead class="bg-sky-500 text-xl">
                     <tr class="text-nowrap">
                         <th class="p-3">City Name</th>
@@ -52,9 +50,6 @@
                     <!-- weather details here -->
                 </tbody>
             </table>
-        </section>
-        <section id="billAmount" class="max-w-5xl max-lg:max-w-160 max-sm:max-w-140 mx-auto flex justify-end">
-            <!-- total price here -->
         </section>
     </main>
 
@@ -139,7 +134,7 @@
         if (degree.classList.contains("hidden")) {
             const fahrArray = tempArray.map(c => ((c * 9 / 5) + 32).toFixed(2));
 
-            tempColumn.forEach((cell, index) => {
+            tempColumn.forEach((cell, index) => { 
                 cell.textContent = fahrArray[index];
             });
         } else {
